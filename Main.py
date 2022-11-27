@@ -20,9 +20,12 @@ lista_de_pinturas = descargar_lista_de_pinturas()
 if(len(lista_de_pinturas) > 0):
     for i in range(len(lista_de_pinturas)):
         lista_de_cotas.append(
-            {"posicion": i, "cota": lista_de_pinturas[i]["serial"]})
-        lista_nombre = lista_de_pinturas[i]["nombre"].split(" ")
+            {"posicion": i, "cota": lista_de_pinturas[i]["cota"]})
         
+        
+def actualizar_lista_de_pinturas(lista_nueva):
+    with open('Datos.txt', 'w') as outfile:
+        json.dump(lista_nueva, outfile)
         
 
 def crear_pintura(lista_de_pinturas,lista_de_cotas):
@@ -30,7 +33,7 @@ def crear_pintura(lista_de_pinturas,lista_de_cotas):
     print("Para ingresar una pintura se requiere que ingrese los valores de la cota,Nombre,Precio y Status")
 
     while True:
-        cota = input("Ingrese la Cota de la puintura (Debe poseer 4 letras y 4 digitos (Ejemplo ABCD123")
+        cota = input("Ingrese la Cota de la puintura (Debe poseer 4 letras y 4 digitos (Ejemplo ABCD123): ")
         if len(cota)==8:
             contador1 = 0
             contador2 = 0
@@ -47,7 +50,7 @@ def crear_pintura(lista_de_pinturas,lista_de_cotas):
             print("Error! No tiene 8 caracteres")
 
     while True:
-        nombre = input('Ingrese el nombre de la obra. Puede contener maximo 30 caracteres')
+        nombre = input('Ingrese el nombre de la obra. Puede contener maximo 30 caracteres: ')
         if len(nombre) < 30 and len(nombre)> 0:
             break
         else:
@@ -55,7 +58,7 @@ def crear_pintura(lista_de_pinturas,lista_de_cotas):
 
     while True:
         try:
-            precio = int(input('Ingrese el precio de la obra'))
+            precio = int(input('Ingrese el precio de la obra: '))
             break
         except:
             print('Ingrese un precio valido')
@@ -63,7 +66,7 @@ def crear_pintura(lista_de_pinturas,lista_de_cotas):
     while True:
         status = input('Ingrese 1 si la obra esta en En exhibicion, ingrese 2 si esta En mantenimiento\n ')
         if status == '1':
-            status =  "EN EXHIBICIÓN"
+            status =  "EN EXHIBICION"
             break
         elif status == '2':
             status = "EN MANTENIMIENTO"
@@ -71,11 +74,22 @@ def crear_pintura(lista_de_pinturas,lista_de_cotas):
         else: 
             print('Ingrese una opcion valida')
 
+    pintura = {
+        "cota":cota,
+        "nombre":nombre,
+        "Precio":precio,
+        "Status":status
+    }
+
+    lista_de_pinturas.append(pintura)
+
+    actualizar_lista_de_pinturas(lista_de_pinturas)
+
+    inicio(lista_de_pinturas, lista_de_cotas)
 
 
 
-
-def inicio(lista_de_pinturas, lista_de_cotas):
+def inicio():
     # Mensaje de bienvenida con las posibles opciones.
     print("""
     Opciones de la aplicación:
@@ -89,6 +103,22 @@ def inicio(lista_de_pinturas, lista_de_cotas):
     7. Salir.
     """)
 
+    opcion = input('Ingrese su opcion')
+
+    if opcion == '1':
+        crear_pintura(lista_de_cotas,lista_de_pinturas)
+    elif opcion == '2':
+        crear_pintura()
+    elif opcion == '3':
+        crear_pintura()
+    elif opcion == '4':
+        crear_pintura()
+    elif opcion == '5':
+        crear_pintura()
+    elif opcion == '6':
+        crear_pintura()
+    elif opcion == '7':
+        crear_pintura()
 
 # Mensaje de Bienvenida
 print(""" 
@@ -102,4 +132,4 @@ print("""
                                                    
  \nBienvenido Gestión de Pinturas para el Louvre.
  """)
-inicio(lista_de_pinturas, lista_de_cotas)
+inicio()
