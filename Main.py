@@ -19,15 +19,20 @@ def descargar_lista_de_pinturas():
 
 lista_de_pinturas = descargar_lista_de_pinturas()
    
+#Se actualiza el txt
+
 def actualizar_lista_de_pinturas(lista_nueva):
     with open('Datos.txt', 'w') as outfile:
         json.dump(lista_nueva, outfile)    
         
 
+#Se crea una nueva pintura
+
 def crear_pintura(lista_de_pinturas):
 
     print("Para ingresar una pintura se requiere que ingrese los valores de la cota, Nombre, Precio y Status")
 
+#Ingresar cota
     continuar = True
     while continuar:
         cota = input("Ingrese la Cota de la pintura (Debe poseer 4 letras y 4 digitos (Ejemplo ABCD123): ")
@@ -50,14 +55,14 @@ def crear_pintura(lista_de_pinturas):
                 print("Error! No es un Serial valido")
         else:
             print("Error! No tiene 8 caracteres")
-
+#ingresar nombre
     while True:
         nombre = input('Ingrese el nombre de la obra. Puede contener maximo 30 caracteres: ')
         if len(nombre) < 30 and len(nombre)> 0:
             break
         else:
             print("Ingrese un nombre valido")
-
+#ingresar precio
     while True:
         try:
             precio = int(input('Ingrese el precio de la obra: '))
@@ -67,7 +72,7 @@ def crear_pintura(lista_de_pinturas):
                 print('Ingrese un precio valido')
         except:
             print('Ingrese un precio valido')
-
+#ingresar status
     while True:
         status = input('Ingrese 1 si la obra esta en En exhibicion, ingrese 2 si esta En mantenimiento\n ')
         if status == '1':
@@ -78,7 +83,7 @@ def crear_pintura(lista_de_pinturas):
             break
         else: 
             print('Ingrese una opcion valida')
-
+#crear el json
     pintura = {
         "cota":cota,
         "nombre":nombre,
@@ -92,6 +97,8 @@ def crear_pintura(lista_de_pinturas):
     actualizar_lista_de_pinturas(lista_de_pinturas)
 
     inicio()
+
+#Se busca con el indicdes de cotas y se cambia a mantenimiento
 
 def PonerMantenimientoCota():
     cota = input('Ingrese a la cota que desea buscar:')
@@ -120,7 +127,9 @@ def PonerMantenimientoCota():
 
     print('No existe ninguna obra con la cota que ingreso')    
     inicio()
-    
+
+
+#Se busca con el indicdes de nombres y se cambia a mantenimiento
     
 def PonerMantenimientoNombre():
     nombre = input('Ingrese el nombre de la obra que desea buscar:')
@@ -148,6 +157,7 @@ def PonerMantenimientoNombre():
     print('No existe ninguna obra con el nombre que ingreso')    
     inicio()
 
+#Menu de mantenimiento para saber que tipo de indicde se usara para buscar
 
 def PonerMantenimiento():
 
@@ -164,6 +174,9 @@ def PonerMantenimiento():
     else:
         print('Ingreso una opcion equivocada') 
         PonerMantenimiento()
+
+
+#Se busca con el indices de cotas y se cambia a exhibicion
 
 def PonerExhibicionCota():
     cota = input('Ingrese a la cota que desea buscar:')
@@ -193,6 +206,8 @@ def PonerExhibicionCota():
     print('No existe ninguna obra con la cota que ingreso')    
     inicio()
 
+#Se busca con el indices de nombres y se cambia a exhibicion
+
 def PonerExhibicionNombre():
     nombre = input('Ingrese a la cota que desea buscar:')
 
@@ -220,6 +235,9 @@ def PonerExhibicionNombre():
 
     print('No existe ninguna obra con la cota que ingreso')    
     inicio()
+
+#menu de exhibicion para saber con que tipo de indice se buscar
+
 def PonerExhibicion():
 
     opcion = input("""
@@ -236,6 +254,7 @@ def PonerExhibicion():
         print('Ingreso una opcion equivocada') 
         PonerExhibicion()
 
+#Menu para eliminar, se pregunta como quiere buscar la pintura que quiere eliminar
 def eliminar():
     
     opcion = input("""
@@ -251,6 +270,9 @@ def eliminar():
     else:
         print('Ingreso una opcion equivocada') 
         eliminar()  
+
+
+#Se elimina logicamente buscando por indice de cotas
 
 def eliminarporcota():
 
@@ -272,6 +294,8 @@ def eliminarporcota():
     print('No exista la cota que desea eliminar')
     inicio()
 
+#Se elimina logicamente  buscando por el indice de nombres    
+
 def eliminarpornombre():
     
     nombre = input('Ingrese la cota que desea eliminar:')
@@ -291,6 +315,7 @@ def eliminarpornombre():
     
     print('No exista la cota que desea eliminar')
 
+#se cambias las eliminaciones logicas a fisicas
 
 def Compactador():
     print('El proceso de Compactor ha comenzado ')
@@ -312,6 +337,7 @@ def Compactador():
 
     inicio()
 
+#menu
 
 def inicio():
 
