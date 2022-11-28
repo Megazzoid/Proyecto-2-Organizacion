@@ -99,15 +99,19 @@ def PonerMantenimientoCota():
         if cota == element['cota']:
 
             posicion = element['posicion']
-            if lista_de_pinturas[posicion]['Status'] == 'EN MANTENIMIENTO':
-                print('La obra ya esta en mantenimiento\n')
-                inicio()
+            if lista_de_pinturas[posicion]['Existencia'] == True:
+                if lista_de_pinturas[posicion]['Status'] == 'EN MANTENIMIENTO':
+                    print('La obra ya esta en mantenimiento\n')
+                    inicio()
+                else:
+                    lista_de_pinturas[posicion]['Status'] = 'EN MANTENIMIENTO'
+                    print('La obra acaba de ser puesta en mantenimiento\n')
+                    actualizar_lista_de_pinturas(lista_de_pinturas)
+                    inicio()
             else:
-                lista_de_pinturas[posicion]['Status'] = 'EN MANTENIMIENTO'
-                print('La obra acaba de ser puesta en mantenimiento\n')
-                actualizar_lista_de_pinturas(lista_de_pinturas)
+                print('La cota no existe')
                 inicio()
-            
+
         else:
             pass
 
@@ -122,13 +126,17 @@ def PonerMantenimientoNombre():
         if nombre == element['nombre']:
 
             posicion = element['posicion']
-            if lista_de_pinturas[posicion]['Status'] == 'EN MANTENIMIENTO':
-                print('La obra ya esta en mantenimiento\n')
-                inicio()
+            if lista_de_pinturas[posicion]['Existencia'] == True:
+                if lista_de_pinturas[posicion]['Status'] == 'EN MANTENIMIENTO':
+                    print('La obra ya esta en mantenimiento\n')
+                    inicio()
+                else:
+                    lista_de_pinturas[posicion]['Status'] = 'EN MANTENIMIENTO'
+                    print('La obra acaba de ser puesta en mantenimiento\n')
+                    actualizar_lista_de_pinturas(lista_de_pinturas)
+                    inicio()
             else:
-                lista_de_pinturas[posicion]['Status'] = 'EN MANTENIMIENTO'
-                print('La obra acaba de ser puesta en mantenimiento\n')
-                actualizar_lista_de_pinturas(lista_de_pinturas)
+                print('La obra con el nombre que ingreso no existe')
                 inicio()
             
         else:
@@ -163,13 +171,17 @@ def PonerExhibicionCota():
         if cota == element['cota']:
 
             posicion = element['posicion']
-            if lista_de_pinturas[posicion]['Status'] == 'EN EXHIBICION':
-                print('La obra ya esta en exhibicion\n')
-                inicio()
+            if lista_de_pinturas[posicion]['Existencia'] == True:
+                if lista_de_pinturas[posicion]['Status'] == 'EN EXHIBICION':
+                    print('La obra ya esta en Exhibicion\n')
+                    inicio()
+                else:
+                    lista_de_pinturas[posicion]['Status'] = 'EN EXHIBICION'
+                    print('La obra acaba de ser puesta en enxihibicion\n')
+                    actualizar_lista_de_pinturas(lista_de_pinturas)
+                    inicio()
             else:
-                lista_de_pinturas[posicion]['Status'] = 'EN EXHIBICION'
-                print('La obra acaba de ser puesta en exhibicion\n')
-                actualizar_lista_de_pinturas(lista_de_pinturas)
+                print('La cota no existe')
                 inicio()
             
         else:
@@ -187,13 +199,17 @@ def PonerExhibicionNombre():
         if nombre == element['nombre']:
 
             posicion = element['posicion']
-            if lista_de_pinturas[posicion]['Status'] == 'EN EXHIBICION':
-                print('La obra ya esta en exhibicion\n')
-                inicio()
+            if lista_de_pinturas[posicion]['Existencia'] == True:
+                if lista_de_pinturas[posicion]['Status'] == 'EN EXHIBICION':
+                    print('La obra ya esta en exhibicion\n')
+                    inicio()
+                else:
+                    lista_de_pinturas[posicion]['Status'] = 'EN EXHIBICION'
+                    print('La obra acaba de ser puesta en exhibicion\n')
+                    actualizar_lista_de_pinturas(lista_de_pinturas)
+                    inicio()
             else:
-                lista_de_pinturas[posicion]['Status'] = 'EN EXHIBICION'
-                print('La obra acaba de ser puesta en exhibicion\n')
-                actualizar_lista_de_pinturas(lista_de_pinturas)
+                print('La obra con el nombre que ingreso no existe')
                 inicio()
             
         else:
@@ -273,8 +289,22 @@ def eliminarpornombre():
     print('No exista la cota que desea eliminar')
 
 
+def Compactador():
+    print('El proceso de Compactor ha comenzado ')
 
+    listaeliminar = []
 
+    for x in range(0,len(lista_de_pinturas)):
+        if lista_de_pinturas[x]['Existencia'] == False:
+            listaeliminar.append(x)
+
+    listaeliminar.sort(reverse=True) 
+
+    for x in listaeliminar:
+        lista_de_pinturas.pop(x)
+
+    actualizar_lista_de_pinturas(lista_de_pinturas) 
+    inicio()
 
 
 def inicio():
@@ -312,7 +342,7 @@ def inicio():
     elif opcion == '4':
         eliminar()
     elif opcion == '5':
-        crear_pintura()
+        Compactador()
     elif opcion == '6':
         exit()
     elif opcion == '7':

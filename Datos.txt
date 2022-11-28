@@ -1,1 +1,1 @@
-[{"cota": "a1b1c1d1", "nombre": "La monalisa", "Precio": 15, "Status": "EN EXHIBICION", "Existencia": true}, {"cota": "c1c1c1c1", "nombre": "genial", "Precio": 30, "Status": "EN EXHIBICION", "Existencia": true}, {"cota": "d1d1d1d1", "nombre": "abstrato", "Precio": 15, "Status": "EN EXHIBICION", "Existencia": true}]
+[{"cota": "a1b1c1d1", "nombre": "La monalisa", "Precio": 15, "Status": "EN EXHIBICION", "Existencia": true}]
