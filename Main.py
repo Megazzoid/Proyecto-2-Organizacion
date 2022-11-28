@@ -2,7 +2,8 @@ import json
 import os
 
 lista_de_pinturas = []
-lista_de_cotas = []
+indice_cotas = []
+indices_nombres = []
 
 
 # Descarga la lista que esta en el archivo data.txt
@@ -17,23 +18,19 @@ def descargar_lista_de_pinturas():
 
 
 lista_de_pinturas = descargar_lista_de_pinturas()
-if(len(lista_de_pinturas) > 0):
-    for i in range(len(lista_de_pinturas)):
-        lista_de_cotas.append(
-            {"posicion": i, "cota": lista_de_pinturas[i]["cota"]})
-        
-        
+   
 def actualizar_lista_de_pinturas(lista_nueva):
     with open('Datos.txt', 'w') as outfile:
-        json.dump(lista_nueva, outfile)
+        json.dump(lista_nueva, outfile)    
         
 
-def crear_pintura(lista_de_pinturas,lista_de_cotas):
+def crear_pintura(lista_de_pinturas):
 
-    print("Para ingresar una pintura se requiere que ingrese los valores de la cota,Nombre,Precio y Status")
+    print("Para ingresar una pintura se requiere que ingrese los valores de la cota, Nombre, Precio y Status")
 
-    while True:
-        cota = input("Ingrese la Cota de la puintura (Debe poseer 4 letras y 4 digitos (Ejemplo ABCD123): ")
+    continuar = True
+    while continuar:
+        cota = input("Ingrese la Cota de la pintura (Debe poseer 4 letras y 4 digitos (Ejemplo ABCD123): ")
         if len(cota)==8:
             contador1 = 0
             contador2 = 0
@@ -43,7 +40,12 @@ def crear_pintura(lista_de_pinturas,lista_de_cotas):
                 elif letra.isalpha():
                     contador2 +=1
             if contador1 == 4 and contador2 == 4:
-                break
+                for element in indice_cotas:
+                    if cota == element['cota']:
+                        print('La cota ya existe')
+                        crear_pintura(lista_de_pinturas)
+                    else:
+                        continuar = False
             else:
                 print("Error! No es un Serial valido")
         else:
@@ -78,47 +80,244 @@ def crear_pintura(lista_de_pinturas,lista_de_cotas):
         "cota":cota,
         "nombre":nombre,
         "Precio":precio,
-        "Status":status
+        "Status":status,
+        "Existencia":True
     }
 
     lista_de_pinturas.append(pintura)
 
     actualizar_lista_de_pinturas(lista_de_pinturas)
 
-    inicio(lista_de_pinturas, lista_de_cotas)
+    inicio()
+
+def PonerMantenimientoCota():
+    cota = input('Ingrese a la cota que desea buscar:')
+
+    contador = 0
+    
+    for element in indice_cotas:
+        if cota == element['cota']:
+
+            posicion = element['posicion']
+            if lista_de_pinturas[posicion]['Status'] == 'EN MANTENIMIENTO':
+                print('La obra ya esta en mantenimiento\n')
+                inicio()
+            else:
+                lista_de_pinturas[posicion]['Status'] = 'EN MANTENIMIENTO'
+                print('La obra acaba de ser puesta en mantenimiento\n')
+                actualizar_lista_de_pinturas(lista_de_pinturas)
+                inicio()
+            
+        else:
+            pass
+
+    print('No existe ninguna obra con la cota que ingreso')    
+    inicio()
+    
+    
+def PonerMantenimientoNombre():
+    nombre = input('Ingrese el nombre de la obra que desea buscar:')
+
+    for element in indices_nombres:
+        if nombre == element['nombre']:
+
+            posicion = element['posicion']
+            if lista_de_pinturas[posicion]['Status'] == 'EN MANTENIMIENTO':
+                print('La obra ya esta en mantenimiento\n')
+                inicio()
+            else:
+                lista_de_pinturas[posicion]['Status'] = 'EN MANTENIMIENTO'
+                print('La obra acaba de ser puesta en mantenimiento\n')
+                actualizar_lista_de_pinturas(lista_de_pinturas)
+                inicio()
+            
+        else:
+            pass
+
+    print('No existe ninguna obra con el nombre que ingreso')    
+    inicio()
+
+
+def PonerMantenimiento():
+
+    opcion = input("""
+    Indique como quiere buscar la pintura:
+    1-Por Cota
+    2-Por nombre 
+    """)
+    
+    if opcion == '1':
+        PonerMantenimientoCota()
+    elif opcion == '2':
+        PonerMantenimientoNombre()
+    else:
+        print('Ingreso una opcion equivocada') 
+        PonerMantenimiento   
+
+def PonerExhibicionCota():
+    cota = input('Ingrese a la cota que desea buscar:')
+
+    
+
+    for element in indice_cotas:
+        if cota == element['cota']:
+
+            posicion = element['posicion']
+            if lista_de_pinturas[posicion]['Status'] == 'EN EXHIBICION':
+                print('La obra ya esta en exhibicion\n')
+                inicio()
+            else:
+                lista_de_pinturas[posicion]['Status'] = 'EN EXHIBICION'
+                print('La obra acaba de ser puesta en exhibicion\n')
+                actualizar_lista_de_pinturas(lista_de_pinturas)
+                inicio()
+            
+        else:
+            pass
+
+    print('No existe ninguna obra con la cota que ingreso')    
+    inicio()
+
+def PonerExhibicionNombre():
+    nombre = input('Ingrese a la cota que desea buscar:')
+
+    
+
+    for element in indices_nombres:
+        if nombre == element['nombre']:
+
+            posicion = element['posicion']
+            if lista_de_pinturas[posicion]['Status'] == 'EN EXHIBICION':
+                print('La obra ya esta en exhibicion\n')
+                inicio()
+            else:
+                lista_de_pinturas[posicion]['Status'] = 'EN EXHIBICION'
+                print('La obra acaba de ser puesta en exhibicion\n')
+                actualizar_lista_de_pinturas(lista_de_pinturas)
+                inicio()
+            
+        else:
+            pass
+
+    print('No existe ninguna obra con la cota que ingreso')    
+    inicio()
+def PonerExhibicion():
+
+    opcion = input("""
+    Indique como quiere buscar la pintura:
+    1-Por Cota
+    2-Por nombre 
+    """)
+    
+    if opcion == '1':
+        PonerExhibicionCota()
+    elif opcion == '2':
+        PonerExhibicionNombre()
+    else:
+        print('Ingreso una opcion equivocada') 
+        PonerMantenimiento  
+
+def eliminar():
+    
+    opcion = input("""
+    Indique como quiere buscar la pintura que quiere eliminar:
+    1-Por Cota
+    2-Por nombre 
+    """)
+
+    if opcion == '1':
+        eliminarporcota()
+    elif opcion == '2':
+        eliminarpornombre()
+    else:
+        print('Ingreso una opcion equivocada') 
+        PonerMantenimiento  
+
+def eliminarporcota():
+
+    cota = input('Ingrese la cota que desea eliminar:')
+
+    for element in indice_cotas:
+        if cota == element['cota']:
+            posicion = element['posicion']
+            if lista_de_pinturas[posicion]['Existencia'] == False:
+                print('No existe la cota que desea eliminar')
+                inicio()
+            else:
+                lista_de_pinturas[posicion]['Existencia'] = False
+                print('Se ha eliminado con exito la cota')
+                inicio()            
+        else:
+            pass
+    
+    print('No exista la cota que desea eliminar')
+    inicio()
+
+def eliminarpornombre():
+    
+    nombre = input('Ingrese la cota que desea eliminar:')
+
+    for element in indices_nombres:
+        if nombre == element['nombre']:
+            posicion = element['posicion']
+            if lista_de_pinturas[posicion]['Existencia'] == False:
+                print('No existe la cota que desea eliminar')
+                inicio()
+            else:
+                lista_de_pinturas[posicion]['Existencia'] = False
+                print('Se ha eliminado con exito la cota')  
+                inicio()          
+        else:
+            pass
+    
+    print('No exista la cota que desea eliminar')
+
+
+
 
 
 
 def inicio():
+
+    indice_cotas.clear()
+    indices_nombres.clear()
+
+    for i in range(len(lista_de_pinturas)):
+        indice_cotas.append(
+            {"posicion": i, "cota": lista_de_pinturas[i]["cota"]})
+        indices_nombres.append(
+            {"posicion": i, "nombre": lista_de_pinturas[i]["nombre"]})
+
+
     # Mensaje de bienvenida con las posibles opciones.
     print("""
     Opciones de la aplicación:
 
     1. Insertar nueva pintura.
-    2. Consulta de una pintura.
-    3. Puesta en exhibicion.
-    4. Eliminacion.
-    5. Borrar Pintura.
-    6. Compactador.
-    7. Salir.
+    2. Poner en mantenimiento.
+    3. Poner en exhibicion.
+    4. Borrar Pintura.
+    5. Compactador.
+    6. Salir.
     """)
 
     opcion = input('Ingrese su opcion')
 
     if opcion == '1':
-        crear_pintura(lista_de_cotas,lista_de_pinturas)
+        crear_pintura(lista_de_pinturas)
     elif opcion == '2':
-        crear_pintura()
+        PonerMantenimiento()
     elif opcion == '3':
-        crear_pintura()
+        PonerExhibicion()
     elif opcion == '4':
-        crear_pintura()
+        eliminar()
     elif opcion == '5':
         crear_pintura()
     elif opcion == '6':
-        crear_pintura()
+        exit()
     elif opcion == '7':
-        crear_pintura()
+        print('Ingreso una opcion no valida')
+        inicio()
 
 # Mensaje de Bienvenida
 print(""" 
@@ -132,4 +331,7 @@ print("""
                                                    
  \nBienvenido Gestión de Pinturas para el Louvre.
  """)
+
+
+
 inicio()
