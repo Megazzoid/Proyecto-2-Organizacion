@@ -61,7 +61,10 @@ def crear_pintura(lista_de_pinturas):
     while True:
         try:
             precio = int(input('Ingrese el precio de la obra: '))
-            break
+            if precio > 0:
+                break
+            else:
+                print('Ingrese un precio valido')
         except:
             print('Ingrese un precio valido')
 
@@ -160,7 +163,7 @@ def PonerMantenimiento():
         PonerMantenimientoNombre()
     else:
         print('Ingreso una opcion equivocada') 
-        PonerMantenimiento   
+        PonerMantenimiento()
 
 def PonerExhibicionCota():
     cota = input('Ingrese a la cota que desea buscar:')
@@ -231,7 +234,7 @@ def PonerExhibicion():
         PonerExhibicionNombre()
     else:
         print('Ingreso una opcion equivocada') 
-        PonerMantenimiento  
+        PonerExhibicion()
 
 def eliminar():
     
@@ -247,7 +250,7 @@ def eliminar():
         eliminarpornombre()
     else:
         print('Ingreso una opcion equivocada') 
-        PonerMantenimiento  
+        eliminar()  
 
 def eliminarporcota():
 
@@ -304,6 +307,9 @@ def Compactador():
         lista_de_pinturas.pop(x)
 
     actualizar_lista_de_pinturas(lista_de_pinturas) 
+
+    print('Se actualizo fisicamente')
+
     inicio()
 
 
@@ -345,7 +351,7 @@ def inicio():
         Compactador()
     elif opcion == '6':
         exit()
-    elif opcion == '7':
+    else:
         print('Ingreso una opcion no valida')
         inicio()
 
